@@ -1,0 +1,55 @@
+package com.hoslic.migration.ui;
+
+import java.awt.BorderLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+import javax.swing.ListModel;
+public class AddFrame extends JFrame{
+	//任务编号
+	private JLabel taskNoL = new JLabel("任务编号：");
+	private JTextField taskNoT = new JTextField(60);
+	//任务保存文件名
+	private JLabel taskFileL = new JLabel("保存文件名：");
+	private JTextField taskFileT = new JTextField(60);
+	//任务sql
+	private JLabel taskSqlL = new JLabel("sql语句：");
+	private JTextArea taskSqlT = new JTextArea(10,60);
+	//任务编号和文件名称 JScrollPane
+	private JScrollPane nofileScrollPane;
+	//sql JScrollPane
+	private JScrollPane sqlScrollPane;
+	//任务内容部分
+	private JSplitPane topSplitPane;
+	//任务属性部分
+	private JSplitPane mainSplitPane;
+	//保存按钮部分
+	private JScrollPane butScrollPane;
+	//任务编号Box
+	private Box taskNoBox = Box.createHorizontalBox();
+	//任务保存文件名Box
+	private Box taskFileBox = Box.createHorizontalBox();
+	//任务sqlBox
+	private Box taskSqlBox = Box.createHorizontalBox();
+	
+	public AddFrame(MainFrame mainFrame){
+		this.taskNoBox.add(Box.createHorizontalStrut(10));
+		this.taskNoBox.add(taskNoL);
+	}
+}

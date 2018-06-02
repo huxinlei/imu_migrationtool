@@ -1,0 +1,133 @@
+package com.hoslic.migration.ui;
+
+import java.awt.event.ActionEvent;
+import java.awt.Insets;
+import java.awt.BorderLayout;
+import java.awt.Font;
+
+import javax.swing.Action;
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JToolBar;
+import javax.swing.JTree;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
+import javax.swing.JProgressBar;
+
+public class MainFrame extends JFrame{
+	//分割任务列表树和右边内容的JSplitPane
+	private JSplitPane mainSplitPane;
+	//显示进度条的JSplitPane
+	private JScrollPane proScrollPane;
+	//显示日志信息的JSplitPane
+	private JScrollPane logScrollPane;
+	//内容JSplitPane的滚动条
+	private JSplitPane contSplitPane;
+	//任务列表树JSplitPane
+	private JScrollPane treePane;
+	//任务列表树
+	private JTree tree;
+	//日志显示
+	private JTextArea logTextArea = new JTextArea(10, 80);
+	//进度条显示
+	private JProgressBar progressBar = new JProgressBar(0, 100);
+	//工具栏
+	private JToolBar toolBar = new JToolBar();
+	//添加任务
+	private Action add = new AbstractAction("添加任务",new ImageIcon("images/in.gif")){
+		public void actionPerformed(ActionEvent e){
+			JOptionPane.showMessageDialog(null, "add", "alert", JOptionPane.ERROR_MESSAGE); 
+		}
+	};
+	//修改任务
+	private Action update = new AbstractAction("修改任务",new ImageIcon("images/out.gif")){
+		public void actionPerformed(ActionEvent e){
+			JOptionPane.showMessageDialog(null, "update", "alert", JOptionPane.ERROR_MESSAGE); 
+		}
+	};
+	//删除任务
+	private Action delete = new AbstractAction("删除任务",new ImageIcon("images/new.gif")){
+		public void actionPerformed(ActionEvent e){
+			JOptionPane.showMessageDialog(null, "delete", "alert", JOptionPane.ERROR_MESSAGE); 
+		}
+	};
+	//执行任务
+	private Action execute = new AbstractAction("执行任务",new ImageIcon("images/reply.gif")){
+		public void actionPerformed(ActionEvent e){
+			JOptionPane.showMessageDialog(null, "execute", "alert", JOptionPane.ERROR_MESSAGE); 
+		}
+	};
+	//创建任务树
+	private JTree createTree(){
+		//创建根节点
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode();
+		//加入格子节点
+		root.add(new DefaultMutableTreeNode(new TreeBox("任务1")));
+		root.add(new DefaultMutableTreeNode(new TreeBox("任务2")));
+		root.add(new DefaultMutableTreeNode(new TreeBox("任务3")));
+		root.add(new DefaultMutableTreeNode(new TreeBox("任务4")));
+		//创建树
+		JTree tree = new JTree(root);
+		//加入鼠标监听器
+		tree.addMouseListener(new SailTreeListener(this));
+		//隐藏根节点
+		tree.setRootVisible(false);
+		//设置节点处理类
+		SailTreeCellRenderer cellRenderer = new SailTreeCellRenderer();
+		tree.setCellRenderer(cellRenderer);
+		return tree;
+	}
+	//创建工具条
+	private void createToolBar(){
+		this.toolBar.add(this.add).setText("添加任务");
+		this.toolBar.add(this.update).setText("修改任务");
+		this.toolBar.add(this.delete).setText("删除任务");
+		this.toolBar.add(this.execute).setText("执行任务");
+		//设置工具栏不可移动
+		this.toolBar.setFloatable(false);
+		//设置工具栏的边距
+		this.toolBar.setMargin(new Insets(5, 10, 5, 5));
+		this.add(this.toolBar, BorderLayout.NORTH);
+	}
+	//树控件事件
+	public void select(){
+		JOptionPane.showMessageDialog(null, "select", "alert", JOptionPane.ERROR_MESSAGE); 
+	}
+	public MainFrame(){
+		this.tree = createTree();
+		
+		this.proScrollPane = new JScrollPane(this.progressBar);
+		this.progressBar.setValue(50);
+		//this.progressBar.setBounds(x, y, width, height);
+		
+		this.logTextArea.setLineWrap(true);
+		this.logTextArea.setEditable(false);
+		this.logTextArea.setFont(new Font(null, Font.BOLD, 14));
+		this.logScrollPane = new JScrollPane(this.logTextArea);
+		
+		this.contSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+				this.proScrollPane, this.logScrollPane);
+		this.treePane = new JScrollPane(this.tree);
+		this.mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+				this.treePane, this.contSplitPane);
+		this.mainSplitPane.setDividerLocation(150);
+		this.mainSplitPane.setDividerSize(3);
+		//创建工具条
+		createToolBar();
+		//设置JFrame的各个属性
+		this.add(mainSplitPane);
+		this.setTitle("数据迁移工具");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);	
+	}
+}

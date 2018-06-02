@@ -1,0 +1,19 @@
+package com.hoslic.migration.io;
+
+import java.sql.ResultSet;
+
+import com.hoslic.migration.jdbc.JDBCExecutor;
+import com.hoslic.migration.entity.Task;
+public interface TaskDataIo {
+	/**
+	 * 执行任务获得数据集
+	 * @return
+	 */
+	boolean saveTaskData(Task task);
+	/**
+	 * 删除文件file
+	 * @param file
+	 * @return
+	 */
+	boolean deleteFile(String file);
+}

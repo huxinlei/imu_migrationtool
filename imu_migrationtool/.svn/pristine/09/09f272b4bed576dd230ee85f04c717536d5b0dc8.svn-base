@@ -1,0 +1,103 @@
+package com.hoslic.migration.ui;
+
+import java.awt.BorderLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+import javax.swing.ListModel;
+import javax.swing.JButton;
+public class CopyOfAddFrame extends JFrame{
+	//任务编号
+	private JLabel taskNoL = new JLabel("任务编号：");
+	private JTextField taskNoT = new JTextField(20);
+	//任务保存文件名
+	private JLabel taskFileL = new JLabel("保存文件名：");
+	private JTextField taskFileT = new JTextField(20);
+	//任务sql
+	private JLabel taskSqlL = new JLabel("sql语句：");
+	private JTextArea taskSqlT = new JTextArea(10,40);
+	//任务编号和文件名称 JScrollPane
+	private JScrollPane nofileScrollPane;
+	//sql JScrollPane
+	private JScrollPane sqlScrollPane;
+	//任务内容部分
+	private JSplitPane topSplitPane;
+	//主框架
+	private JSplitPane mainSplitPane;
+	//任务属性部分
+	private JSplitPane butSplitPane;
+	//table
+	private JScrollPane tableScrollPane;
+	//保存按钮部分
+	private JScrollPane butScrollPane;
+	//任务编号Box
+	private Box taskNoBox = Box.createHorizontalBox();
+	//任务保存文件名Box
+	private Box taskFileBox = Box.createHorizontalBox();
+	//任务sqlBox
+	private Box taskSqlBox = Box.createHorizontalBox();
+	//保存按钮
+	private JButton saveBtn = new JButton("保存") ;
+	
+	public CopyOfAddFrame(MainFrame mainFrame){
+		//任务编号
+		this.taskNoBox.add(Box.createHorizontalStrut(10));
+		this.taskNoBox.add(taskNoL);
+		this.taskNoBox.add(Box.createHorizontalStrut(5));
+		this.taskNoBox.add(taskNoT);
+		this.taskNoBox.add(Box.createHorizontalStrut(10));
+		//任务文件名
+		this.taskNoBox.add(Box.createHorizontalStrut(10));
+		this.taskNoBox.add(taskFileL);
+		this.taskNoBox.add(Box.createHorizontalStrut(5));
+		this.taskNoBox.add(taskFileT);
+		this.taskNoBox.add(Box.createHorizontalStrut(10));
+		//任务sql
+		this.taskSqlBox.add(Box.createHorizontalStrut(10));
+		this.taskSqlBox.add(taskSqlL);
+		this.taskSqlBox.add(Box.createHorizontalStrut(5));
+		this.taskSqlBox.add(taskSqlT);
+		this.taskFileBox.add(Box.createHorizontalStrut(10));
+		//nofileScrollPane
+		this.nofileScrollPane = new JScrollPane(this.taskNoBox);
+		//this.nofileScrollPane.add();
+		//this.nofileScrollPane.add(this.taskFileBox);
+		//sqlScrollPane
+		this.sqlScrollPane = new JScrollPane(this.taskSqlBox);
+		//topSplitPane
+		this.topSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+				this.nofileScrollPane, this.sqlScrollPane);
+		//table 
+		this.tableScrollPane = new JScrollPane();
+		//按钮部分
+		this.butScrollPane = new JScrollPane(this.saveBtn);
+		//butSplitPane
+		this.butSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+				this.tableScrollPane, this.butScrollPane);
+		this.mainSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+				this.topSplitPane, this.butSplitPane);
+		this.mainSplitPane.setDividerSize(5);
+		this.setTitle("添加任务");
+		this.add(this.mainSplitPane);
+		this.pack();
+		this.setLocation(140, 80);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);	
+	}
+}

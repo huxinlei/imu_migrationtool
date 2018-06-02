@@ -1,0 +1,265 @@
+package com.hoslic.migration.ui;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Box;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+import javax.swing.ListModel;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.JComboBox;
+
+public class UpdateFrame extends JFrame{
+	//任务编号
+	private JLabel taskNoL = new JLabel("任务编号：");
+	private JTextField taskNoT = new JTextField(10);
+	//任务保存文件名
+	private JLabel taskFileL = new JLabel("保存文件名：");
+	private JTextField taskFileT = new JTextField(10);
+	//任务sql
+	private JLabel taskSqlL = new JLabel("sql语句：");
+	private JTextArea taskSqlT = new JTextArea();
+	//结尾分割Label
+	private JLabel seperator1 = new JLabel("");
+	private JLabel seperator2 = new JLabel("");
+	private JLabel seperator3 = new JLabel("                 ");
+	private JLabel seperator4 = new JLabel("");
+	//sql JScrollPane
+	private JScrollPane sqlScrollPane;
+	//任务属性列表JTable
+	private JTable taskColumns;
+	private Object[][] cells = {{"Mercury",2440.0,0,false,Color.yellow},
+			{"Mercury",2440.0,0,false,Color.yellow},{"Mercury",2440.0,0,false,Color.yellow},
+			{"Mercury",2440.0,0,false,Color.yellow},
+			{"Mercury",2440.0,0,false,Color.yellow},
+			{"Mercury",2440.0,0,false,Color.yellow},
+			{"Mercury",2440.0,0,false,Color.yellow},
+			{"Mercury",2440.0,0,false,Color.yellow},
+			{"Mercury",2440.0,0,false,Color.yellow}};
+	private String[] columnNames = {"Planet","Radius","Moons","Gaseous","Color"};
+	private JScrollPane colScrollPane;
+	//属性名称
+	private JLabel colNameL = new JLabel("属性名称：");
+	private JTextField colNameT = new JTextField(10);
+	//属性类型
+	private String[] typeList = {"String", "Int", "Long", "Short", "Float",
+			"Double", "Boolean", "Date", "BigDecimal"};
+	private JLabel colTypeL = new JLabel("属性类型：");
+	private JComboBox colTypeT;
+	//是否将0设为null
+	private String[] isNull = {"false", "true"};
+	private JLabel colNullL = new JLabel("是否编号：");
+	private JComboBox colNullT;
+	//添加按钮
+	private JButton addBtn = new JButton("添加属性");
+	//修改按钮
+	private JButton updateBtn = new JButton("修改属性");
+	//删除按钮
+	private JButton deleteBtn = new JButton("删除属性");
+	//保存按钮
+	private JButton saveBtn = new JButton("保存") ;
+	//取消按钮
+	private JButton cancelBtn = new JButton("取消");
+	//默认宽度
+	private static final int DEFAULT_WIDTH = 900;
+	//默认高度
+	private static final int DEFAULT_HIGHT = 600;
+	private void initComponents(){
+		this.taskColumns = new JTable(cells, columnNames);
+		this.colTypeT = new JComboBox(typeList);
+		this.colNullT = new JComboBox(isNull);
+	}
+	private void initListener(){
+		//保存按钮
+		this.saveBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				JOptionPane.showMessageDialog(null, "save", "alert", JOptionPane.ERROR_MESSAGE); 
+			}
+		});
+		//取消按钮
+		this.cancelBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				JOptionPane.showMessageDialog(null, "cancel", "alert", JOptionPane.ERROR_MESSAGE); 
+			}
+		});
+		//添加属性按钮
+		this.addBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				JOptionPane.showMessageDialog(null, "add", "alert", JOptionPane.ERROR_MESSAGE); 
+			}
+		});
+		//修改属性按钮
+		this.updateBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				JOptionPane.showMessageDialog(null, "update", "alert", JOptionPane.ERROR_MESSAGE); 
+			}
+		});
+		//删除属性按钮
+		this.deleteBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				JOptionPane.showMessageDialog(null, "delete", "alert", JOptionPane.ERROR_MESSAGE); 
+			}
+		});
+	}
+	public UpdateFrame(MainFrame mainFrame){
+		//初始化控件内容
+		initComponents();
+		//初始化监听事件
+		initListener();
+		
+		GridBagLayout layout = new GridBagLayout();
+		this.setLayout(layout);
+		this.add(taskNoL);
+		this.add(taskNoT);
+		this.add(taskFileL);
+		this.add(taskFileT);
+		this.add(seperator1);
+		this.add(taskSqlL);
+		this.taskSqlT.setLineWrap(true);
+		this.taskSqlT.setFont(new Font(null, Font.BOLD, 14));
+		//this.taskSqlT.setSize(taskSqlT.getWidth(), taskSqlT.getHeight() + 10);
+		this.sqlScrollPane = new JScrollPane(this.taskSqlT);
+		this.add(sqlScrollPane);
+		//this.taskColumns.setSize(taskColumns.getWidth(), taskColumns.getHeight() - 10);
+		this.colScrollPane = new JScrollPane(this.taskColumns);
+		this.add(colScrollPane);
+		this.add(colNameL);
+		this.add(colNameT);
+		this.add(colTypeL);
+		this.add(colTypeT);
+		this.add(colNullL);
+		this.add(colNullT);
+		this.add(addBtn);
+		this.add(updateBtn);
+		this.add(deleteBtn);
+		this.add(seperator2);
+		this.add(seperator3);
+		this.add(saveBtn);
+		this.add(cancelBtn);
+		this.add(seperator4);
+		GridBagConstraints s = new GridBagConstraints();
+		s.insets = new Insets(3, 2, 2, 3);
+		s.fill = GridBagConstraints.BOTH;
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(taskNoL, s);
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(taskNoT, s);
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(taskFileL, s);		
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(taskFileT, s);
+		s.gridwidth = 0;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(seperator1, s);
+		
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 1;
+		layout.setConstraints(taskSqlL, s);
+		s.gridwidth = 0;
+		s.weightx = 1;
+		s.weighty = 0;
+		layout.setConstraints(sqlScrollPane, s);
+		
+		s.gridwidth = 0;
+		s.weightx = 1;
+		s.weighty = 0;
+		layout.setConstraints(colScrollPane, s);
+		
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(colNameL, s);
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(colNameT, s);
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(colTypeL, s);
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(colTypeT, s);
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(colNullL, s);
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(colNullT, s);
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(addBtn, s);
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(updateBtn, s);
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(deleteBtn, s);
+		s.gridwidth = 0;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(seperator2, s);
+		
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(seperator3, s);
+		s.fill = GridBagConstraints.RELATIVE;
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(saveBtn, s);
+		s.gridwidth = 1;
+		s.weightx = 0;
+		s.weighty = 0;
+		layout.setConstraints(cancelBtn, s);
+		s.gridwidth = 0;
+		s.weightx = 0;
+		s.weighty = 0;
+		s.fill =  GridBagConstraints.BOTH;
+		layout.setConstraints(seperator4, s);
+		
+		this.setTitle("添加任务");
+		this.setLocation(140, 80);
+		this.setSize(DEFAULT_WIDTH, DEFAULT_HIGHT);
+		this.setResizable(false);
+	}
+	
+}

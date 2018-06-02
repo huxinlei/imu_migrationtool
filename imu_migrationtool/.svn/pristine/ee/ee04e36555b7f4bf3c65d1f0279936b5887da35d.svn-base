@@ -1,0 +1,30 @@
+package com.hoslic.migration.service.impl;
+
+import com.hoslic.migration.dao.TaskDataDao;
+import com.hoslic.migration.dao.impl.TaskDataDaoImpl;
+import com.hoslic.migration.io.TaskDataIo;
+import com.hoslic.migration.io.impl.TaskDataIoImpl;
+
+import com.hoslic.migration.entity.Task;
+import com.hoslic.migration.service.TaskService;
+
+public class TaskServiceImpl implements TaskService{
+	private TaskDataDao taskDao;
+	private TaskDataIo taskIo;
+	
+	public TaskServiceImpl(){
+		taskDao = new TaskDataDaoImpl();
+		taskIo = new TaskDataIoImpl();
+	}
+	public boolean taskExecute(Task task){
+		boolean result = true;
+		task = taskDao.initTask(task);
+		if(taskIo.saveTaskData(task)){
+			result = true;
+		}else {
+			result = false;
+		}
+		return result;
+	}
+	
+}

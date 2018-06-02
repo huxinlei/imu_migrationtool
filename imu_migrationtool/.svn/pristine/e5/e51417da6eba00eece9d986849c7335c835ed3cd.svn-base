@@ -1,0 +1,125 @@
+package com.hoslic.migration.main;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import com.hoslic.migration.entity.Column;
+import com.hoslic.migration.entity.Task;
+import com.hoslic.migration.service.TaskService;
+import com.hoslic.migration.service.impl.TaskServiceImpl;
+import com.hoslic.migration.commons.FtpConnection;
+import com.hoslic.migration.commons.FtpProperties;
+import com.hoslic.migration.commons.ZipUtil;
+public class Main {
+
+	public static void main(String[] args) {
+		//生成任务部分
+		Task task = new Task();
+		List<String> sqls = new ArrayList<String>();
+		String sql = "SELECT QHBM XQBM, QHMC XQMC, SJQHBM SSQH, SJQHBM DJDW, "+
+						"NULL BGR, TBRQ BGRQ, '1' FLAG FROM QH WHERE QHJB = '6'";
+		sqls.add(sql);
+		List<Column> cols = new ArrayList<Column>();
+		Column col1 = new Column("QHBM", "String");
+		Column col2 = new Column("QHMC", "String");
+		Column col3 = new Column("SJQHBM", "String");
+		Column col4 = new Column("SJQHBM", "String");
+		Column col5 = new Column("BGR", "String");
+		Column col6 = new Column("TBRQ", "String");
+		Column col7 = new Column("Flag", "String");
+		cols.add(col1);
+		cols.add(col2);
+		cols.add(col3);
+		cols.add(col4);
+		cols.add(col5);
+		cols.add(col6);
+		cols.add(col7);
+		task.setColumns(cols);
+		task.setId(1);
+		task.setFile("T_CFXX.TXT");
+		task.setSql(sqls);
+		TaskService taskService = new TaskServiceImpl();
+		taskService.taskExecute(task);
+		
+		Task task1 = new Task();
+		List<String> sqls1 = new ArrayList<String>();
+		String sql1 = "SELECT RID, PYXM, NULL, WHCD, ZZMM, ZJXY, NULL, HYZK, NULL, CHRQ,"+
+						"SBZK, JKZK, ZY, GZDWMC, SUBSTR(LXDH,1,20), FQBM, FQXM, FQZJLX, FQZJHM, MQBM,"+
+						"MQXM, MQZJLX, MQZJHM, POBM, POXM, POZJLX, POZJHM, HKXZ, HKBH, YHZGX,"+
+						"HJDXZ, NULL, NULL, JZXZ, XJDXZ, NULL, NULL, NULL, NULL, NULL,"+
+						"NULL, NULL, FMLDSZRQ, BRLDSZRQ, TCRQ, TCYY, NULL, NULL, TBRQ, NULL,"+
+						"SFYLFN, SFDSZN, HZBM, FHBZ, REMARKS, XM, CSRQ, ZJLX, ZJHM, XB,"+
+						"MZ, NULL, SUBSTR(HJDBM,1,12), NULL, SUBSTR(XJDBM,1,12), SUBSTR(DJDWBM,1,12), NULL, rtrim(TBR), EDITLRQ, BZ,"+
+						"NULL, NULL, NULL, BYZK, NULL, NULL, NULL, NULL, NULL, XYNHS,"+
+						"XYNVHS, NULL, NULL FROM RY";
+		sqls.add(sql1);
+		List<Column> cols1 = new ArrayList<Column>();
+		Column col11 = new Column("RYBM", "String");
+		Column col12 = new Column("XMPY", "String");
+		Column col13 = new Column("GLDW", "String");
+		Column col14 = new Column("WHCD_DM", "String");
+		Column col15 = new Column("ZZMM_DM", "String");
+		Column col16 = new Column("ZJXY_DM", "String");
+		Column col17 = new Column("DQSX", "String");
+		Column col18 = new Column("HYZK_DM", "String");
+		Column col19 = new Column("HBRQ_DATE", "Date");
+		Column col110 = new Column("CHRQ_DATE", "Date");
+		Column col111 = new Column("SBZK", "String");
+		Column col112 = new Column("JKZK_DM", "String");
+		Column col113 = new Column("ZY_DM", "String");
+		Column col114 = new Column("GZDW", "String");
+		Column col115 = new Column("LXDH", "String");
+		Column col116 = new Column("FQBM", "String");
+		Column col117 = new Column("FQXM", "String");
+		Column col118 = new Column("FQZJLX_DM", "String");
+		Column col119 = new Column("FQZJHM", "String");
+		Column col120 = new Column("MQBM", "String");
+		Column col121 = new Column("MQXM", "String");
+		Column col122 = new Column("MQZJLX_DM", "String");
+		Column col123 = new Column("MQZJHM", "String");
+		Column col124 = new Column("POBM", "String");
+		Column col125 = new Column("POXM", "String");
+		Column col126 = new Column("POZJLX_DM", "String");
+		Column col127 = new Column("POZJHM", "String");
+		Column col128 = new Column("HKXZ_DM", "String");
+		cols1.add(col11);
+		cols1.add(col12);
+		cols1.add(col13);
+		cols1.add(col14);
+		cols1.add(col15);
+		cols1.add(col16);
+		cols1.add(col17);
+		task1.setColumns(cols1);
+		task1.setId(2);
+		task1.setFile("T_RYJBXX.TXT");
+		task1.setSql(sqls1);
+		//TaskService taskService = new TaskServiceImpl();
+		taskService.taskExecute(task1);
+		
+		//ftp服务器配置部分
+		boolean flag = true;
+		try{
+			FtpConnection ftp = new FtpConnection(FtpProperties.URL,FtpProperties.PORT,
+					FtpProperties.USERNAME,FtpProperties.PASSWORD);
+			ftp.uploadFiles("T_CFXX.TXT", "test/test/T_CFXX.TXT");
+			ftp.logout();
+		}catch(IOException e){
+			flag = false;
+		}
+		if(flag){
+			System.out.println("上传文件成功！");
+		} else {
+			System.out.println("上传文件失败！");
+		}
+		//数据进行压缩部分
+		String[] files = new String[1];
+		files[0] = task.getFile();
+		files[1] = task.getFile();
+		files[2] = task.getFile();
+		ZipUtil.filesToZip("test.zip", files);
+	}
+
+}

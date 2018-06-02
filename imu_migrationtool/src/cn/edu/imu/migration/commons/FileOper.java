@@ -1,0 +1,30 @@
+package cn.edu.imu.migration.commons;
+
+import java.io.FileWriter;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import cn.edu.imu.migration.entity.Column;
+import cn.edu.imu.migration.entity.Task;
+
+public class FileOper {
+	public static boolean saveStrToFile(String file, String str){
+		boolean result = true;
+		try{
+			//初始化写入文件类
+			FileWriter writer = new FileWriter(file);
+			//写入数据总行数
+			writer.write(str);
+			//写入文件
+			writer.flush();
+			//关闭文件
+			writer.close();
+			result = true;
+		}catch(Exception e){
+			result = false;//写入失败
+			System.out.println(e.getMessage());
+		}
+		return result;
+	}
+}

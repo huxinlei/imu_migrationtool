@@ -1,0 +1,14 @@
+package com.hoslic.migration.service;
+
+import java.sql.ResultSet;
+
+import com.hoslic.migration.jdbc.JDBCExecutor;
+import com.hoslic.migration.entity.Task;
+
+public interface TaskService {
+	/**
+	 * 执行任务服务
+	 * @return
+	 */
+	boolean taskExecute(Task task);
+}

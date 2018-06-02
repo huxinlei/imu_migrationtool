@@ -1,0 +1,70 @@
+package com.hoslic.migration.main;
+
+import java.sql.ResultSet;
+import java.util.List;
+import java.util.ArrayList;
+
+import com.hoslic.migration.dao.TaskDataDao;
+import com.hoslic.migration.dao.impl.TaskDataDaoImpl;
+import com.hoslic.migration.service.TaskService;
+import com.hoslic.migration.service.impl.TaskServiceImpl;
+import com.hoslic.migration.entity.Task;
+import com.hoslic.migration.entity.Column;
+
+
+public class Test2 {
+
+	public static void main(String[] args) {
+		Task task = new Task();
+		List<String> sqls = new ArrayList<String>();
+		//String sql = "SELECT QHBM XQBM, QHMC XQMC, SJQHBM SSQH, "
+						//+"SJQHBM DJDW, NULL BGR, TBRQ BGRQ, '1'"+
+							//" FLAG FROM QYRK3.QH WHERE QHJB = '6';";
+		//String sql = "SELECT *"
+						//+" FROM QH WHERE QHJB = '6';";
+		String sql = "SELECT QHBM XQBM, QHMC XQMC, SJQHBM SSQH, SJQHBM DJDW, "+
+						"NULL BGR, TBRQ BGRQ, '1' FLAG FROM QH WHERE QHJB = '6'";
+		sqls.add(sql);
+		List<Column> cols = new ArrayList<Column>();
+		Column col1 = new Column("QHBM", "String");
+		Column col2 = new Column("QHMC", "String");
+		Column col3 = new Column("SJQHBM", "String");
+		Column col4 = new Column("SJQHBM", "String");
+		Column col5 = new Column("BGR", "String");
+		Column col6 = new Column("TBRQ", "String");
+		Column col7 = new Column("Flag", "String");
+		cols.add(col1);
+		cols.add(col2);
+		cols.add(col3);
+		cols.add(col4);
+		cols.add(col5);
+		cols.add(col6);
+		cols.add(col7);
+		task.setColumns(cols);
+		task.setId(1);
+		task.setFile("T_CFXX.TXT");
+		task.setSql(sqls);
+		TaskService taskService = new TaskServiceImpl();
+		taskService.taskExecute(task);
+		// TODO Auto-generated method stub
+         /*System.out.println("Test test");
+ 		 try{
+			String sql = "select count(1) N from CT";
+			//Integer num = Integer.parseInt(map.get("N").toString());
+			//System.out.println("num = " + num);
+			TaskDataDao taskDao = new TaskDataDaoImpl();
+		
+			ResultSet rs = taskDao.getDatas(sql);
+			System.out.println(rs.getFetchSize());
+			while(rs.next()){
+				int t = rs.getInt(1);
+				System.out.println(t);
+			}
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}*/
+	}
+
+}

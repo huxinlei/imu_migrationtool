@@ -1,0 +1,23 @@
+package com.hoslic.migration.main;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import com.hoslic.migration.entity.Column;
+import com.hoslic.migration.entity.Task;
+import com.hoslic.migration.service.TaskService;
+import com.hoslic.migration.service.impl.TaskServiceImpl;
+import com.hoslic.migration.commons.FtpConnection;
+import com.hoslic.migration.commons.FtpProperties;
+import com.hoslic.migration.commons.ZipUtil;
+import com.hoslic.migration.commons.InitTasks;
+import com.hoslic.migration.ui.MainFrame;
+public class Main {
+	public static void main(String[] args) {
+		MainFrame main = new MainFrame();
+		main.setVisible(true);
+	}
+}

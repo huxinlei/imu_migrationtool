@@ -1,0 +1,255 @@
+package com.hoslic.migration.main;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import com.hoslic.migration.entity.Column;
+import com.hoslic.migration.entity.Task;
+import com.hoslic.migration.service.TaskService;
+import com.hoslic.migration.service.impl.TaskServiceImpl;
+import com.hoslic.migration.commons.FtpConnection;
+import com.hoslic.migration.commons.FtpProperties;
+import com.hoslic.migration.commons.ZipUtil;
+public class Main {
+
+	public static void main(String[] args) {
+		//生成任务部分
+		Task task = new Task();
+		List<String> sqls = new ArrayList<String>();
+		String sql = "SELECT QHBM XQBM, QHMC XQMC, SJQHBM SSQH, SJQHBM DJDW, "+
+						"NULL BGR, TBRQ BGRQ, '1' FLAG FROM QH WHERE QHJB = '6'";
+		sqls.add(sql);
+		List<Column> cols = new ArrayList<Column>();
+		Column col1 = new Column("QHBM", "String");
+		Column col2 = new Column("QHMC", "String");
+		Column col3 = new Column("SJQHBM", "String");
+		Column col4 = new Column("SJQHBM", "String");
+		Column col5 = new Column("BGR", "String");
+		Column col6 = new Column("TBRQ", "String");
+		Column col7 = new Column("Flag", "String");
+		cols.add(col1);
+		cols.add(col2);
+		cols.add(col3);
+		cols.add(col4);
+		cols.add(col5);
+		cols.add(col6);
+		cols.add(col7);
+		task.setColumns(cols);
+		task.setId(1);
+		task.setFile("T_CFXX.TXT");
+		task.setSql(sqls);
+		TaskService taskService = new TaskServiceImpl();
+		taskService.taskExecute(task);
+		
+		Task task1 = new Task();
+		List<String> sqls1 = new ArrayList<String>();
+		String sql1 = "SELECT RID, PYXM, NULL, WHCD, ZZMM, ZJXY, NULL, HYZK, NULL, CHRQ,"+
+						"SBZK, JKZK, ZY, GZDWMC, SUBSTR(LXDH,1,20), FQBM, FQXM, FQZJLX, FQZJHM, MQBM,"+
+						"MQXM, MQZJLX, MQZJHM, POBM, POXM, POZJLX, POZJHM, HKXZ, HKBH, YHZGX,"+
+						"HJDXZ, NULL, NULL, JZXZ, XJDXZ, NULL, NULL, NULL, NULL, NULL,"+
+						"NULL, NULL, FMLDSZRQ, BRLDSZRQ, TCRQ, TCYY, NULL, NULL, TBRQ, NULL,"+
+						"SFYLFN, SFDSZN, HZBM, FHBZ, REMARKS, XM, CSRQ, ZJLX, ZJHM, XB,"+
+						"MZ, NULL, SUBSTR(HJDBM,1,12), NULL, SUBSTR(XJDBM,1,12), SUBSTR(DJDWBM,1,12), NULL, rtrim(TBR), EDITLRQ, BZ,"+
+						"NULL, NULL, NULL, BYZK, NULL, NULL, NULL, NULL, NULL, XYNHS,"+
+						"XYNVHS, NULL, NULL FROM RY";
+		sqls1.add(sql1);
+		List<Column> cols1 = new ArrayList<Column>();
+		Column col11 = new Column("RYBM", "String");
+		Column col12 = new Column("XMPY", "String");
+		Column col13 = new Column("GLDW", "String");
+		Column col14 = new Column("WHCD_DM", "String");
+		Column col15 = new Column("ZZMM_DM", "String");
+		Column col16 = new Column("ZJXY_DM", "String");
+		Column col17 = new Column("DQSX", "String");
+		Column col18 = new Column("HYZK_DM", "String");
+		Column col19 = new Column("HBRQ_DATE", "Date");
+		Column col110 = new Column("CHRQ_DATE", "Date");
+		Column col111 = new Column("SBZK", "String");
+		Column col112 = new Column("JKZK_DM", "String");
+		Column col113 = new Column("ZY_DM", "String");
+		Column col114 = new Column("GZDW", "String");
+		Column col115 = new Column("LXDH", "String");
+		Column col116 = new Column("FQBM", "String");
+		Column col117 = new Column("FQXM", "String");
+		Column col118 = new Column("FQZJLX_DM", "String");
+		Column col119 = new Column("FQZJHM", "String");
+		Column col120 = new Column("MQBM", "String");
+		Column col121 = new Column("MQXM", "String");
+		Column col122 = new Column("MQZJLX_DM", "String");
+		Column col123 = new Column("MQZJHM", "String");
+		Column col124 = new Column("POBM", "String");
+		Column col125 = new Column("POXM", "String");
+		Column col126 = new Column("POZJLX_DM", "String");
+		Column col127 = new Column("POZJHM", "String");
+		Column col128 = new Column("HKXZ_DM", "String");
+		Column col129 = new Column("HKBH", "String");
+		Column col130 = new Column("YHZGX_DM", "String");
+		Column col131 = new Column("HJDXZ", "String");
+		Column col132 = new Column("QYRQ_DATE", "String");
+		Column col133 = new Column("QYLX_DM", "String");
+		Column col134 = new Column("JZXZ_DM", "String");
+		Column col135 = new Column("XJDXZ", "String");
+		Column col136 = new Column("LDRQ_DATE", "Date");
+		Column col137 = new Column("LDLX_DM", "String");
+		Column col138 = new Column("LDYY_DM", "String");
+		Column col139 = new Column("YZRQ_DATE", "Date");
+		Column col140 = new Column("FZRQ_DATE", "Date");
+		Column col141 = new Column("ZJJZRQ_DATE", "Date");
+		Column col142 = new Column("LDZBH", "String");
+		Column col143 = new Column("BRLZRQ_DATE", "Date");
+		Column col144 = new Column("ZNLZRQ_DATE", "Date");
+		Column col145 = new Column("TCRQ_DATE", "Date");
+		Column col146 = new Column("TCYY_DM", "String");
+		Column col147 = new Column("JLFZRQ_DATE", "Date");
+		Column col148 = new Column("TBFZRQ_DATE", "Date");
+		Column col149 = new Column("JKRQ_DATE", "Date");
+		Column col150 = new Column("TBR", "String");
+		Column col151 = new Column("SFYLFN_DM", "String");
+		Column col152 = new Column("SFDSZN_DM", "String");
+		Column col153 = new Column("HZBM", "String");
+		Column col154 = new Column("FHBZ", "String");
+		Column col155 = new Column("BZ", "String");
+		Column col156 = new Column("XM", "String");
+		Column col157 = new Column("CSRQ_DATE", "Date");
+		Column col158 = new Column("ZJLX_DM", "String");
+		Column col159 = new Column("ZJHM", "String");
+		Column col160 = new Column("XB_DM", "String");
+		Column col161 = new Column("MZ_DM", "String");
+		Column col162 = new Column("HJD", "String");
+		Column col163 = new Column("HJDXZQH", "String");
+		Column col164 = new Column("XJZD", "String");
+		Column col165 = new Column("XJXZQH", "String");
+		Column col166 = new Column("DJDW", "String");
+		Column col167 = new Column("DJMC", "String");
+		Column col168 = new Column("BGR", "String");
+		Column col169 = new Column("BGRQ_DATE", "Date");
+		Column col170 = new Column("FLAG", "String");
+		Column col171 = new Column("ZMBLZT_DM", "String");
+		Column col172 = new Column("HYZMHM", "String");
+		Column col173 = new Column("SFLDSZ_DM", "String");
+		Column col174 = new Column("DQBYZK_DM", "String");
+		Column col175 = new Column("LCRQ_DATE", "Date");
+		Column col176 = new Column("LRDDJRQ_DATE", "Date");
+		Column col177 = new Column("LDZT_DM", "String");
+		Column col178 = new Column("SFTCXT_DM", "String");
+		Column col179 = new Column("TCXTYY_DM", "String");
+		Column col180 = new Column("NHS", "Int");
+		Column col181 = new Column("NVHS", "Int");
+		Column col182 = new Column("ZPLJ", "String");
+		Column col183 = new Column("LKRQ_DATE", "Date");
+		cols1.add(col11);
+		cols1.add(col12);
+		cols1.add(col13);
+		cols1.add(col14);
+		cols1.add(col15);
+		cols1.add(col16);
+		cols1.add(col17);
+		cols1.add(col18);
+		cols1.add(col19);
+		cols1.add(col110);
+		cols1.add(col111);
+		cols1.add(col112);
+		cols1.add(col113);
+		cols1.add(col114);
+		cols1.add(col115);
+		cols1.add(col116);
+		cols1.add(col117);
+		cols1.add(col118);
+		cols1.add(col119);
+		cols1.add(col120);
+		cols1.add(col121);
+		cols1.add(col123);
+		cols1.add(col124);
+		cols1.add(col125);
+		cols1.add(col126);
+		cols1.add(col127);
+		cols1.add(col128);
+		cols1.add(col129);
+		cols1.add(col130);
+		cols1.add(col131);
+		cols1.add(col132);
+		cols1.add(col133);
+		cols1.add(col134);
+		cols1.add(col135);
+		cols1.add(col136);
+		cols1.add(col137);
+		cols1.add(col138);
+		cols1.add(col139);
+		cols1.add(col140);
+		cols1.add(col141);
+		cols1.add(col142);
+		cols1.add(col143);
+		cols1.add(col144);
+		cols1.add(col145);
+		cols1.add(col146);
+		cols1.add(col147);
+		cols1.add(col148);
+		cols1.add(col149);
+		cols1.add(col150);
+		cols1.add(col151);
+		cols1.add(col152);
+		cols1.add(col153);
+		cols1.add(col154);
+		cols1.add(col155);
+		cols1.add(col156);
+		cols1.add(col157);
+		cols1.add(col158);
+		cols1.add(col159);
+		cols1.add(col160);
+		cols1.add(col161);
+		cols1.add(col162);
+		cols1.add(col163);
+		cols1.add(col164);
+		cols1.add(col165);
+		cols1.add(col166);
+		cols1.add(col167);
+		cols1.add(col168);
+		cols1.add(col169);
+		cols1.add(col170);
+		cols1.add(col171);
+		cols1.add(col172);
+		cols1.add(col173);
+		cols1.add(col174);
+		cols1.add(col175);
+		cols1.add(col176);
+		cols1.add(col177);
+		cols1.add(col178);
+		cols1.add(col179);
+		cols1.add(col180);
+		cols1.add(col181);
+		cols1.add(col182);
+		cols1.add(col183);
+		task1.setColumns(cols1);
+		task1.setId(2);
+		task1.setFile("T_RYJBXX.TXT");
+		task1.setSql(sqls1);
+		//TaskService taskService = new TaskServiceImpl();
+		taskService.taskExecute(task1);
+		
+		//ftp服务器配置部分
+		boolean flag = true;
+		try{
+			FtpConnection ftp = new FtpConnection(FtpProperties.URL,FtpProperties.PORT,
+					FtpProperties.USERNAME,FtpProperties.PASSWORD);
+			ftp.uploadFiles("T_CFXX.TXT", "test/test/T_CFXX.TXT");
+			ftp.logout();
+		}catch(IOException e){
+			flag = false;
+		}
+		if(flag){
+			System.out.println("上传文件成功！");
+		} else {
+			System.out.println("上传文件失败！");
+		}
+		//数据进行压缩部分
+		String[] files = new String[1];
+		files[0] = task.getFile();
+		//files[1] = task.getFile();
+		//files[2] = task.getFile();
+		ZipUtil.filesToZip("test.zip", files);
+	}
+
+}
